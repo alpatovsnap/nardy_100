@@ -280,6 +280,8 @@ function renderChart(mode='points'){
  for(let i=0;i<=5;i++){const val=i*limit/5,y=Y(val);add('line',{x1:lx,y1:y,x2:rx,y2:y,stroke:'#91764c','stroke-width':.85,'stroke-opacity':.35,'stroke-dasharray':'4 7'});add('text',{x:35,y:y+5,'text-anchor':'end',fill:'#c3ad89','font-family':'Georgia','font-size':'13'},Number(val.toFixed(1)))}
  const step=Math.max(1,Math.ceil((series.length-1)/6));
  for(let i=0;i<series.length;i++)if(i===0||i===series.length-1||i%step===0)add('text',{x:X(i),y:281,'text-anchor':i===0?'start':i===series.length-1?'end':'middle',fill:'#d9c5a3','font-family':'Georgia','font-size':'14'},dateShort(series[i].date));
+ // Make the entire plot respond to hover/tap, not only the small dots.
+ add('rect',{x:lx-10,y:ty-8,width:rx-lx+20,height:by-ty+16,fill:'transparent','pointer-events':'all'});
  for(const [k,color,dash,offset] of [['friend','#88bbaa','7 6',3],['me','#e8bd77',null,-3]]){
  // При равном счёте слегка разводим маркеры, чтобы оба игрока были видны.
  const arr=series.map((d,i)=>[X(i),Y(d[k])+(d.me===d.friend?offset:0)]);add('polyline',{points:arr.map(([x,y])=>x+','+y).join(' '),stroke:color,'stroke-width':3.5,fill:'none','stroke-linecap':'round','stroke-linejoin':'round',...(dash?{'stroke-dasharray':dash}:{})});
